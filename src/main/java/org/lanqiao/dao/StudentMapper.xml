@@ -9,4 +9,9 @@
     <insert id="addStudent" parameterType="org.lanqiao.pojo.Student">
         insert  into stu(sname,sage,ssex) values (#{sname},#{sage},#{ssex})
     </insert>
+    <!--sql语句-->
+    <!--方法  结果集：返回类型-->
+    <select id="findAllStudent" resultType="org.lanqiao.pojo.Student">
+        select * from stu
+    </select>
 </mapper>

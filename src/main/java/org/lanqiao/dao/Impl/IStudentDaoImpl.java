@@ -9,6 +9,7 @@ import org.lanqiao.pojo.Student;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.List;
 
 public class IStudentDaoImpl implements StudentDao {
     @Override
@@ -27,5 +28,29 @@ public class IStudentDaoImpl implements StudentDao {
         if(sqlSession!=null){
             sqlSession.close();
         }
+    }
+
+    @Override
+    public List<Student> findStu() {
+        List<Student> allStudent = null;
+        //0 读取配置文件
+        InputStream is = null;
+        try {
+            is = Resources.getResourceAsStream("mybatis-config.xml");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        // 1 建立SqlSessionFactory 对象
+        SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(is);
+        //2 获取SqlSession对象
+        SqlSession sqlSession =  sqlSessionFactory.openSession();
+        //3 执行sql
+        allStudent = sqlSession.selectList("findAllStudent");
+        //返回一个结果集，无需提交
+        //4 关闭sqlsession
+        if(sqlSession!=null){
+            sqlSession.close();
+        }
+        return allStudent;
     }
 }
